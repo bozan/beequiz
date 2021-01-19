@@ -58,8 +58,10 @@ connection = psycopg2.connect("postgres://vwpohimgeyneus:f9605357e7dbd92534b72c8
 #Creating a cursor object using the cursor() method
 cursor = connection.cursor()
 
+
 # Creating table one by one
 for statement in INIT_STATEMENTS:
     cursor.execute(statement)
-    
+
+connection.commit()
 cursor.close()
