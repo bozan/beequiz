@@ -4,7 +4,7 @@ from database import Database
 from functools import wraps
 from passlib.hash import pbkdf2_sha256 as hasher
 import os
-#db = Database(os.environ.get("DATABASE_URL"))
+db = Database(os.environ.get("DATABASE_URL"))
 def main():
     db = current_app.config["db"]
     list_teachers = db.get_teachers()
