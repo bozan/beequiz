@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<main class="col-md-9 ms-sm-auto col-lg-12 px-md-8">
+    
+
+    <div class="row align-items-start ">
+            {% if questions_data %}
+            {% for data in questions_data %}  
+        <div class="col-md-10">
+            <div class="row jumbotron" id="question-list">
+            <div class="col-md-12 question mb-4">
+                <div class="row">
+                <div class="mb-3 col-md-12">
+                    <label for="exampleFormControlTextarea1" class="form-label"><h3> <b>{{loop.index}})</b> &nbsp;{{data.question}}</h3></label>
+                </div>
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     <div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group">
+                        <label class="btn btn-outline-primary" for="btnradio1"> &nbsp; &nbsp;<b>A</b>: &nbsp; {{data.a}} </label>
+                    
+                        <label class="btn btn-outline-primary" for="btnradio2"> &nbsp; &nbsp;<b>B</b>:  &nbsp; {{data.b}}</label>
+                    
+                        <label class="btn btn-outline-primary" for="btnradio3"> &nbsp; &nbsp;<b>C</b>:  &nbsp;  {{data.c}}</label>
+            
+                        <label class="btn btn-outline-primary" for="btnradio4"> &nbsp; &nbsp;<b>D</b>:  &nbsp;  {{data.d}}</label>
+                    </div>
+                </div>
+            </div>
+            <h6 class="btn-primary btn-sm"> The Answer is <b>{{data.correct}}  </b> </h6> &nbsp;&nbsp;&nbsp;
+            <a href ="{{url_for('update_question',question_id = data.question_id, quiz_id = quiz_id)}}" >Change the answer</a>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+            <div> 
+                <a href="{{url_for('delete_question',question_id = data.question_id,quiz_id = quiz_id)}}" style="color:red;" onclick="return confirm('Are you sure you want to delete this question?');">DELETE QUESTION</a>
+            </div>
+            </div>
+        </div> 
+
+        {% endfor %}
+        {% endif%}
+        <div class="col-md-2 align-self-start">
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="{{url_for('main_quizzes',class_id = quiz.class_code)}}" role="button">Back to quizzes page</a>
+            </p>
+            <ul class="list-group mt-2 ">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <b>Time</b>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {% if quiz %}
+                        <h3>{{quiz.quiz_time}}</h3>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+
+
+{% endblock %}

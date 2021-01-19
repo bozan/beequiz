@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<header> <!-- en ustteki gri bar  -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="{{url_for('main')}}">Bee Quiz</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('student_page')}}">Student Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('teacher_page')}}">Instructor Login</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+</header>
+  
+<main> <!-- ogrenci girisi  -->
+  <div class="container">
+    <div class="login-register-box">
+      <div class="row mt-5 mb-5 ">
+        <div class="col-md-4 offset-md-4">
+          <br> <br> <br>
+          {% if error %}
+           <h3>{{error}}  </h3>
+           {% endif %} <br><br>
+          <h3>Student Login</h3>
+          <form class="mt-3" method="POST">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email</label>
+              <input type="email" placeholder="example@itu.edu.tr" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+            </div>
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div> 
+            <button type="submit" class="btn btn-primary">
+              Submit
+            </button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+{% endblock %}

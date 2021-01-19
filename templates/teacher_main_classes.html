@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<header> <!-- en ustteki gri bar  -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="{{url_for('teacher_main_page')}}">Main Page</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('teacher_main_page')}}">All classes</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('logout')}}">Log out</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+</header>
+<div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="position-sticky pt-3">
+          <ul class="nav flex-column">
+            {% if classes %}
+              {% for class in classes %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{{url_for('main_quizzes',class_id = class.class_code)}}">
+                    <span data-feather="shopping-cart"></span>
+                    {{ class.class_name }}
+                  </a>
+                </li>
+              {% endfor %}
+            {% endif %} 
+          </ul>
+        </div>
+      </nav>
+      
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"><br><br>
+            <div class="row">
+                <div class="col-md-8">
+                    <p class="lead">
+                        <a class="btn btn-primary btn-lg" href="{{url_for('create_class')}}" role="button">CREATE  NEW CLASS</a>
+                    </p>
+                    <br><br>
+                    <h4> Your Current Classes :</h4> <br>
+                    {% if classes %}
+                    <table class="table is-striped is-fullwidth">
+                    <tr>
+                        <th>Class ID</th>
+                        <th>Class Name</th>
+                        <th>Change the Class Name </th>
+                        <th>Delete the Class </th>
+    
+                    </tr>
+                    {% for class in classes %}
+                    <tr>
+                        <td> <a href="{{url_for('main_quizzes',class_id = class.class_code)}}">{{ class.class_code }}</a></td>
+                        <td> <a href="{{url_for('main_quizzes',class_id = class.class_code)}}">{{ class.class_name }}</a></td>
+                        <td><a href="{{url_for('update_class',class_id = class.class_code)}}" >EDIT</a></td>
+                        <td><a href="{{url_for('delete_class',class_id = class.class_code)}}" >DELETE</a></td>
+                    </tr>
+                    {% endfor %}
+                    </table>
+                    {% endif %}     
+                </div>
+
+                <div class="col-md-4 jumbotron">
+                    <h6>Your information
+                    <span class="badge badge-primary badge-pill">Instructor</span> </h6>
+                    {% if teacher_ %}
+                    <ul class="list-group mt-4 ">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Name surname : {{ teacher_.teacher_name }} {{ teacher_.teacher_surname }}
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            E-mail address : {{ teacher_.teacher_email }}
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Teacher ID : {{ tid }}
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Number of classes: {{ number_of_classes }}
+                    </li>
+                    </ul> <br>
+                    {% endif %}
+                    <a href="{{url_for('update_teacher')}}">Edit Personal Information</a>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+{% endblock %}

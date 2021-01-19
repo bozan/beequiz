@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<header> <!-- en ustteki gri bar  -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="{{url_for('teacher_main_page')}}">Main Page</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('teacher_main_page')}}">All classes</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('logout')}}">Log out</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+</header>
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+          {% if classes %}
+            {% for class in classes %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('main_quizzes',class_id = class.class_code)}}">
+                  <span data-feather="shopping-cart"></span>
+                  {{ class.class_name }}
+                </a>
+              </li>
+            {% endfor %}
+          {% endif %} 
+        </ul>
+      </div>
+    </nav>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="row">
+            <div class="col-md-12"> <br><br>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="{{url_for('create_quiz',class_id = class_id)}}" role="button">CREATE  NEW QUIZ</a>
+                </p>
+                <br><br>
+                <h4> Quizzes in this class :</h4> <br>
+                <table class="table table-striped table-lg">
+                    <tr>
+                        <th>Class ID</th>
+                        <th>Quiz name</th>
+                        <th>Time </th>
+                        <th>Results</th>
+                        <th>Change the Quiz Name</th>
+                        <th>Delete quiz information</th>
+
+                    </tr>
+                    {% if quizzes %}
+                    {% for quiz in quizzes %}
+                      <tr>
+                        <td> <a href="{{url_for('questions',quiz_id = quiz.quiz_id)}}" >{{class_id}}</a></td>
+                        <td> <a href="{{url_for('questions',quiz_id = quiz.quiz_id)}}" >{{quiz.quiz_title}}</a></td>
+                        <td> <a href="{{url_for('questions',quiz_id = quiz.quiz_id)}}" >{{quiz.quiz_time}}</a></td>
+                        <td> <a href="{{url_for('results',quiz_id = quiz.quiz_id)}}" >SEE THE RESULTS</a></td>
+                        <td><a href="{{url_for('update_quiz',quiz_id = quiz.quiz_id)}}" >EDIT</a></td>
+                        <td> <a href="{{url_for('delete_quiz',quiz_id = quiz.quiz_id)}}" >DELETE</a></td>
+                      </tr>
+                    {% endfor %}
+                    {% endif %}
+                </table>
+
+        </div>
+    </main>
+  </div>
+</div>
+{% endblock %}

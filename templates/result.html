@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<p class="lead">
+    <a class="btn btn-primary btn-lg" href="{{url_for('show_quizzes_to_student',class_id = quiz.class_code)}}" role="button">Back to quizzes page</a>
+</p>
+<div>
+    <h3>Student ID : {{student_id}}</h3> 
+    <div class="jumbotron" style="text-align:center">
+    {% if full %}
+        <h2 class="">Congratulations {{student_name}} !</h2> <br> 
+        
+        {% endif %}
+        <h1>&nbsp; Your score is <text class="text-success">{{score}}</text></h1>
+    </div>  
+</div>
+
+
+
+{% endblock %}

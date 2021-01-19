@@ -1,0 +1,32 @@
+
+ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+
+.course-box{
+    border: 1px solid rgba(0,0,0,.125);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+.course-box-title{
+    font-size: 20px;
+}
+.course-box-instructors li{
+    margin-right: 20px;
+}
+.right
+{
+   float: right;
+   width: 300px;
+   background-color:#b0e0e6;
+}
+footer{
+    color: #fff;
+    position:relative;
+	margin-top: -150px;
+	clear: both;
+	width:100%;
+}

@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block content %}
+<header> <!-- en ustteki gri bar  -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="{{url_for('main')}}">Bee Quiz</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('student_page')}}">Student Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('teacher_page')}}">Instructor Login</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <script>
+    var check = function() {
+    if (document.getElementById('password').value ==
+      document.getElementById('confirm_password').value) {
+      document.getElementById('message').style.color = 'green';
+      document.getElementById('message').innerHTML = 'matching';
+    } else {
+      document.getElementById('message').style.color = 'red';
+      document.getElementById('message').innerHTML = 'not matching';
+    }
+  }
+  </script>
+    <div class ="has-text-centered" >
+      {% if password_error %}
+      <h2><b style =" color:darkred">{{password_error}}</b></h2>
+      {% endif %}
+      {% if error %}
+      <h2><b style =" color:darkred">{{error}}</b></h2>
+      {% endif %}
+
+     <form px-4name="signUp" action="" method="POST">
+        <h3>Enter your information to register </h3> <br> <br>
+
+        <b for="fname">First name:</b><br>
+        <input type="text" id="fname" name="fname"><br><br>
+
+        <b for="lname">Last name:</b><br>
+        <input type="text" id="lname" name="lname" required="required"></br><br>
+
+        <b for="lname">School ID:</b><br>
+        <input type="number" id="ownid" name="ownid" required="required"></br><br>
+
+        <b for="email">E-mail:</b></br>
+        <input type="email" id="email" name="Email" required="required" placeholder="example@itu.edu.tr"></br><br>
+      
+        <b for="pwd">Password:</b></br>
+        <input type="password" name="password" id="password" type="password" onkeyup='check();' required="required" placeholder ="at least 4 characters"></br><br>
+
+        <b for="pwd">Password(again):  <span id='message'></span></b><br>
+        <input type="password" name="confirm_password"  id="confirm_password"  onkeyup='check();' required="required"placeholder="verify"> </br><br>
+        <input type="radio" id="teacher" name="person" value="teacher" required="required"> 
+        <label for="teacher">Teacher</label> 
+        <input type="radio" id="student" name="person" value="student" required="required">
+        <label for="student">Student</label><br> <br>
+
+        <button type="submit" class="btn btn-primary btn-lg ">
+          enroll
+        </button>
+      </form> 
+    </div>
+{% endblock %}
