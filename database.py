@@ -1,7 +1,6 @@
 from classes import Class, Student, Teacher, Quiz, Question, Result
 import psycopg2
 import psycopg2.extras
-#from user import Studentt
 from passlib.hash import pbkdf2_sha256 as hasher
 from views import *
 
@@ -14,15 +13,10 @@ class Database():
         self.students = {}
         self._last_student_key = 0
         self.quizzes = {}
-        self._last_quiz_key = 0
-        self._last_question_key = 0
-
        
         self.connection = psycopg2.connect(database_url, sslmode = 'require')
-        #self.connection = psycopg2.connect(user="postgres",
-         #                           password="postgres21",
-      #                          database="beequiz")
         self.cur = self.connection.cursor()
+
 # TEACHER #
     def add_teacher(self,new_teacher):
         with self.connection as conn:
@@ -286,13 +280,12 @@ class Database():
 
     def add_quiz(self, new_quiz):
         with self.connection as conn:
-            self._last_quiz_key += 1
             cursor = conn.cursor()
-            insert_query = "INSERT INTO quiz (quiz_id, quiz_title, quiz_time, class_code) VALUES (%s, %s, %s, %s)"
-            cursor.execute(insert_query,(self._last_quiz_key,new_quiz.title,new_quiz.time,new_quiz.class_id))
+            insert_query = "INSERT INTO quiz (quiz_title, quiz_time, class_code) VALUES (%s, %s, %s) returning quiz_id"
+            cursor.execute(insert_query,(new_quiz.title,new_quiz.time,new_quiz.class_id))
             conn.commit()
-        self.quizzes[self._last_quiz_key] = new_quiz
-        return self._last_quiz_key
+            quizid = cursor.fetchone()
+        return quizid[0]
     
     def get_quiz(self,quiz_id):
         with self.connection.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
@@ -324,7 +317,6 @@ class Database():
 
     def add_question_into_quiz(self,quiz_id,new_question):
         with self.connection as conn:
-            self._last_question_key += 1
             cursor = conn.cursor()
             insert_query = "INSERT INTO question (quiz_id, question, a, b, c, d, correct) VALUES (%s,%s, %s, %s, %s, %s, %s)"
             cursor.execute(insert_query,(quiz_id, new_question.form_question, new_question.form_A, new_question.form_B, new_question.form_C, new_question.form_D, new_question.correct))
