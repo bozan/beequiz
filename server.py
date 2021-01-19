@@ -2,7 +2,7 @@ from flask import Flask, current_app, redirect, render_template, json, request
 from views import *
 import views
 from flask_login import LoginManager
-from user import get_user
+import os
 
 lm = LoginManager() ##
 
@@ -48,7 +48,8 @@ def create_app():
     lm.init_app(app) ##
     lm.login_view = "student_page" ##
 
-    db = Database()
+    db = Database(os.environ.get("DATABASE_URL"))
+    
     app.config["db"] = db
     return app
 

@@ -54,9 +54,7 @@ INIT_STATEMENTS = [
 ]
 
 #Establishing the connection
-connection = psycopg2.connect(user="postgres",
-                                    password="postgres21",
-                                    database="beequiz")
+connection = psycopg2.connect("postgres://vwpohimgeyneus:f9605357e7dbd92534b72c8ff29bb44e3747cc93bd4a285311d1024a899d3e48@ec2-54-156-73-147.compute-1.amazonaws.com:5432/d2149c25ftmcog",sslmode = 'require')
 #Creating a cursor object using the cursor() method
 cursor = connection.cursor()
 

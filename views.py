@@ -129,8 +129,8 @@ def teacher_main_page():
     tid = session['id']
     teacher_ = db.get_teacher(None,tid)
     list_classes = db.get_t_classes(tid)
-    #number_of_classes = db.count_class_of_teacher(tid)
-    return render_template("teacher_main_classes.html",classes = list_classes,teacher_ = teacher_, tid=tid, number_of_classes = 3)
+    number_of_classes = db.count_class_of_teacher(tid)
+    return render_template("teacher_main_classes.html",classes = list_classes,teacher_ = teacher_, tid=tid, number_of_classes = number_of_classes)
 
 @is_logged_in
 def update_teacher():

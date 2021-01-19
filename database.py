@@ -6,7 +6,7 @@ from passlib.hash import pbkdf2_sha256 as hasher
 from views import *
 
 class Database():
-    def __init__(self):
+    def __init__(self,database_url):
         self.classes = {}
         self._last_class_key = 0
         self.teachers = {}
@@ -17,9 +17,11 @@ class Database():
         self._last_quiz_key = 0
         self._last_question_key = 0
 
-        self.connection = psycopg2.connect(user="postgres",
-                                    password="postgres21",
-                                    database="beequiz")
+       
+        self.connection = psycopg2.connect(database_url, sslmode = 'require')
+        #self.connection = psycopg2.connect(user="postgres",
+         #                           password="postgres21",
+      #                          database="beequiz")
         self.cur = self.connection.cursor()
 # TEACHER #
     def add_teacher(self,new_teacher):
@@ -265,10 +267,16 @@ class Database():
     
     def count_class_of_teacher(self,teacher_id):
         with self.connection.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
-            count_query = "SELECT teacher_id, COUNT(teacher_id) AS number_of_class FROM class WHERE teacher_id =%s GROUP BY teacher_id"
-            cursor.execute(count_query,[teacher_id])
-            number  = cursor.fetchone()
-        return number[1]
+            check_query = "SELECT EXISTS (select true from class where teacher_id=%s)"
+            cursor.execute(check_query,[teacher_id])
+            boolean = cursor.fetchone()
+            if boolean[0]:
+                count_query = "SELECT teacher_id, COUNT(teacher_id) AS number_of_class FROM class WHERE teacher_id =%s GROUP BY teacher_id"
+                cursor.execute(count_query,[teacher_id])
+                number  = cursor.fetchone()
+                return number[1]
+            else :
+                return 0
 
 
 
@@ -374,7 +382,7 @@ class Database():
             cursor.execute(avg_query,[quiz_id])
             the_average  = cursor.fetchone()
         return the_average[0]
-        
+
 
     def quiz_done_before(self,student_id,quiz_id): #check whether the quiz is done before 
         with self.connection.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
