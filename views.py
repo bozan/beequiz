@@ -431,13 +431,15 @@ def result(quiz_id):
     quiz_ = db.get_quiz(quiz_id)
     student_id = session["s-id"]
     student_name = session["s-name"]
-    score = db.get_score(student_id,quiz_id)
-    if score == 100:
+    score_info = db.get_score(student_id,quiz_id)
+    average_score = db.get_average_score(quiz_id)
+
+    if score_info[5] == 100:
         full = True
     else:
         full = False
 
-    return render_template("result.html", student_name = student_name,student_id = student_id, score=score, quiz = quiz_,full=full)
+    return render_template("result.html", student_name = student_name,student_id = student_id, score_info = score_info, quiz = quiz_,full=full,average = average_score)
 
 @is_logged_in
 def logout():

@@ -6,14 +6,45 @@
     <a class="btn btn-primary btn-lg" href="{{url_for('show_quizzes_to_student',class_id = quiz.class_code)}}" role="button">Back to quizzes page</a>
 </p>
 <div>
-    <h3>Student ID : {{student_id}}</h3> 
     <div class="jumbotron" style="text-align:center">
     {% if full %}
         <h2 class="">Congratulations {{student_name}} !</h2> <br> 
         
         {% endif %}
-        <h1>&nbsp; Your score is <text class="text-success">{{score}}</text></h1>
+        {% if score_info %}
+        <h1>&nbsp; Your score is <text class="text-success">{{score_info.score}}</text></h1>
     </div>  
+    <table class="table table-bordered">
+        <tr>
+            <td><b>Your Name </b> </td>
+            <td> {{student_name}}</td>
+        </tr>
+        <tr>
+            <td><b>Your Student ID </b> </td>
+            <td> {{student_id}}</td>
+        </tr>
+        <tr>
+            <td> <b>Teacher Name</b></td>
+            <td> {{score_info.teacher_name}} {{score_info.teacher_surname}}</td>
+        </tr>
+        <tr>
+            <td> <b>Class Name</b> </td>
+            <td> {{score_info.class_name}}</td>
+        </tr>
+        <tr>
+            <td> <b>Quiz Name</b> </td>
+            <td> {{score_info.quiz_title}}</td>
+        </tr>
+        <tr>
+            <td> <b>Your Score</b> </td>
+            <td> <b class="text-success">{{score_info.score}}</b></td>
+            <tr>
+                <td> <b>Average Score</b> </td>
+                <td> <b class="text-success">{{average}}</b></td>
+            </tr>
+        </tr>
+    </table>
+    {% endif %}
 </div>
 
 

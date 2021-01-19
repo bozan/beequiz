@@ -363,10 +363,10 @@ class Database():
 
     def  get_score(self,student_id,quiz_id): #for students
         with self.connection.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
-            score_query = "SELECT * FROM result WHERE student_id =%s and quiz_id =%s"
+            score_query = "SELECT c.class_code, c.class_name, q.quiz_id, q.quiz_title, r.student_id, r.score, t.teacher_name, t.teacher_surname FROM result r INNER JOIN quiz q ON r.quiz_id = q.quiz_id INNER JOIN class c ON q.class_code = c.class_code INNER JOIN teacher t ON c.teacher_id = t.teacher_id WHERE r.student_id = %s and q.quiz_id = %s"
             cursor.execute(score_query,(student_id,quiz_id))
             the_score  = cursor.fetchone()
-        return the_score[2]
+        return the_score
 
     def get_average_score(self,quiz_id):
         with self.connection.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
