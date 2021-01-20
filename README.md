@@ -1,2 +1,3 @@
 # beequiz
-database management systems project
+Database Project - Quiz Management Systems
+Link : https://beequizzes.herokuapp.com
